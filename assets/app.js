@@ -71,38 +71,43 @@ function refreshTable() {
 
         // Add each train's data into the table
         var firstTimeConverted = moment(trainFirstArrival, "hh:mm").subtract(1, "years");
-        console.log(firstTimeConverted);
+        // console.log(firstTimeConverted);
         // Current Time
         var currentTime = moment();
-        console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+        // console.log("CURRENT : " + moment(currentTime).format("hh:mm"));
         // Difference between the times
         var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-        console.log("DIFFERENCE IN TIME: " + diffTime);
+        // console.log("Diff : " + diffTime);
         // Time apart (remainder)
         var tRemainder = diffTime % trainfrequency;
-        console.log(tRemainder);
+        // console.log(tRemainder);
         // Minute Until Train
         var tMinutesTillTrain = trainfrequency - tRemainder;
-        console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+        // console.log("timeleft: " + tMinutesTillTrain);
         // Next Train
         var nextTrain = moment().add(tMinutesTillTrain, "minutes")
-        console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"))
+        // console.log("Arrival time: " + moment(nextTrain).format("hh:mm"))
         nextTrainDeparture = moment(nextTrain).format("hh:mm");
 
         $("#trainTable > #trainData").append("<tr><td>" + trainName + "</td><td>" + traindestination + "</td><td>" + trainfrequency + "</td><td>" + nextTrainDeparture + "</td><td>" + tMinutesTillTrain + "</td><td>");
 
     });
 }
-var timeStep = setInterval(currentTime, 1000);
+var refreshTime = setInterval(currentTime, 1000);
 
 function currentTime() {
-    var timeNow = moment().format("hh:mm:ss A");
-    $("#currentTime").text("Current Time: " + timeNow);
+    var timeCurrent = moment().format("hh:mm:ss A");
+    var currentDate = moment().format('MM/ DD/ YYYY'); 
+    // $("#currentTime").text("Current Time: " + timeCurrent);
+    $('#currentTime').html('<img class="clk" src="assets/images/clock.jpg">');
+    $("#currentTime").append("Current Time: " + timeCurrent);
+    $('#currentDate').html('<img class="clk" src="assets/images/c.png">');
+    $("#currentDate").append("Today's Date: " + currentDate);
 
     // Refresh the Page every minute, on the minute
-    var secondsNow = moment().format("ss");
+    var secondsCurrent = moment().format("ss");
 
-    if (secondsNow == "00") {
+    if (secondsCurrent == "00") {
         refreshTable();
     }
 
